@@ -31,8 +31,10 @@ function esperarAppletYActivar() {
 	
 
 function inicializarListeners(ggbApplet) {
-    console.log("✅ GeoGebra listo. Listeners activados.");   	
+    console.log("✅ GeoGebra listo. Listeners activados.");  
   	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
+	ggbApplet.registerObjectUpdateListener("actualizacionDominioF1", "fuerzaActualizacionF1");
+	ggbApplet.registerObjectUpdateListener("actualizacionFuncion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
@@ -78,6 +80,8 @@ function actualizaAdvertencia() {
 function fuerzaActualizacionF1() {
     //alert("EUREKA GLOBAL F1");
 	console.log("🔄 actualizacion1 ha cambiado:", ggbApplet.getValue("actualizacion1"));
+	ggbApplet.unregisterObjectUpdateListener("actualizacionDominioF1");
+	ggbApplet.unregisterObjectUpdateListener("actualizacionFuncion1");
     ggbApplet.unregisterObjectUpdateListener("actualizacion1");
     ggbApplet.unregisterObjectUpdateListener("actualizacion2");
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
@@ -400,6 +404,8 @@ function fuerzaActualizacionF1() {
     ggbApplet.setValue("actualizacionDominioF1", 0);
     ggbApplet.setValue("actualizacionFuncion1", 0);
     ggbApplet.evalCommand("limites=true");
+	ggbApplet.registerObjectUpdateListener("actualizacionDominioF1", "fuerzaActualizacionF1");
+	ggbApplet.registerObjectUpdateListener("actualizacionFuncion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
