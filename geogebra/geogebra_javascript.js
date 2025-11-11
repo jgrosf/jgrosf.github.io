@@ -32,7 +32,7 @@ function esperarAppletYActivar() {
 
 function inicializarListeners(ggbApplet) {
     console.log("✅ GeoGebra listo. Listeners activados.");   	
-  	
+  	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
