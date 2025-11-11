@@ -77,6 +77,7 @@ function actualizaAdvertencia() {
 
 function fuerzaActualizacionF1() {
     //alert("EUREKA GLOBAL F1");
+	console.log("🔄 actualizacion1 ha cambiado:", ggbApplet.getValue("actualizacion1"));
     ggbApplet.unregisterObjectUpdateListener("actualizacion1");
     ggbApplet.unregisterObjectUpdateListener("actualizacion2");
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
