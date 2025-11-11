@@ -5,6 +5,7 @@
 <meta charset="utf-8"/>
   
  <script src="GeoGebra/deployggb.js"></script>
+ <script src="geogebra_javascript.js"></script>
 </head>
 <body>
 <div id="ggbApplet"></div>
@@ -24,13 +25,14 @@ var parameters = {
 "enableShiftDragZoom":true,
 "enableRightClick":false,
 "errorDialogsActive":false,
-"useBrowserForJS":true,
+"useBrowserForJS":false,
 "allowStyleBar":false,
 "preventFocus":false,
 "showZoomButtons":true,
 "capturingThreshold":3,
 // add code here to run when the applet starts
-"appletOnLoad":function(api){ ggbApplet=api; },
+//"appletOnLoad":function(api){ ggbApplet=api; },
+"ggbOnInitParam": "ggbOnInit",
 "showFullscreenButton":true,
 "scale":1,
 "disableAutoScale":false,
