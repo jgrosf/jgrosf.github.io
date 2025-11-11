@@ -3,18 +3,35 @@ console.log("📦 geogebra-javascript.js cargado correctamente");
 
 function ggbOnInit() {
 	console.log("🚀 ggbOnInit() llamada");
+	 esperarAppletYActivar();
+}
+// Fallback: si GeoGebra nunca llama a ggbOnInit, lo hacemos nosotros
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("🕓 DOM listo, esperando ggbApplet...");
+    esperarAppletYActivar();
+});	
+
+function esperarAppletYActivar() {
+    let intentos = 0;
+    const maxIntentos = 50; // ~10 segundos
+
+    const intervalo = setInterval(() => {
+        intentos++;
+        const ggbApplet = window.ggbApplet;
+
+        if (ggbApplet && typeof ggbApplet.registerAddListener === "function") {
+            clearInterval(intervalo);
+            inicializarListeners(ggbApplet);
+        } else if (intentos > maxIntentos) {
+            clearInterval(intervalo);
+            console.error("❌ No se detectó ggbApplet tras varios intentos");
+        }
+    }, 200);
+}
 	
-	const ggbApplet = window.ggbApplet; // referencia al objeto del applet
-    
-    console.log("ggbApplet:", ggbApplet);
 
-    if (!ggbApplet) {
-        console.warn("⚠️ ggbApplet aún no disponible en ggbOnInit()");
-        return;
-    }
-
-    console.log("✅ GeoGebra inicializado correctamente."); 	
-   	
+function inicializarListeners(ggbApplet) {
+    console.log("✅ GeoGebra listo. Listeners activados.");   	
   	
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
