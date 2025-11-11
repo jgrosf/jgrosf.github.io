@@ -3,12 +3,11 @@ function ggbOnInit() {
 	const ggbApplet = window.ggbApplet; // referencia al objeto del applet
 
     if (!ggbApplet) {
-        console.log("⚠️ ggbApplet no disponible en ggbOnInit()");
+        alert("no carga");
         return;
     }
 
-    console.log("✅ GeoGebra inicializado correctamente.");
-	
+    	
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
