@@ -1,8 +1,8 @@
 
 console.log("📦 geogebra-javascript.js cargado correctamente");
 
-function ggbOnInit() {
-	console.log("🚀 ggbOnInit() llamada");
+function appletOnLoad(ggbApplet) {
+	console.log("🚀 appletOnLoad() llamada");
 	 esperarAppletYActivar();
 }
 // Fallback: si GeoGebra nunca llama a ggbOnInit, lo hacemos nosotros
@@ -17,7 +17,7 @@ function esperarAppletYActivar() {
 
     const intervalo = setInterval(() => {
         intentos++;
-        const ggbApplet = window.ggbApplet;
+        //const ggbApplet = window.ggbApplet;
 
         if (ggbApplet && typeof ggbApplet.registerAddListener === "function") {
             clearInterval(intervalo);
