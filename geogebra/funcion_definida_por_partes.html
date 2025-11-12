@@ -15,10 +15,9 @@
 <div id="applet_container">Cargando Applet...</div>
 <div id="estado">Valor de actualizacion1: <span id="valor_actualizacion1">---</span></div>
 <script>
-(async function() {
+window.addEventListener("load", async function() {
     const ggbFile = "funcion_definida_a_trozos_v66_2_web_basico.ggb";
 
-    // Verifica que el archivo GGB existe
     try {
         const r = await fetch(ggbFile);
         if (!r.ok) throw new Error("No se pudo cargar el archivo GGB");
@@ -28,6 +27,7 @@
         document.getElementById('applet_container').textContent = "Error al cargar el applet.";
         return;
     }
+
 var parameters = {
 "id": "ggbApplet",
 "width":1440,
@@ -70,11 +70,12 @@ var parameters = {
 var views = {'is3D': 1,'AV': 0,'SV': 0,'CV': 0,'EV2': 1,'CP': 0,'PC': 0,'DA': 0,'FI': 0,'macro': 0};
 var applet = new GGBApplet(parameters,true);
 
-applet.setHTML5Codebase('GeoGebra/HTML5/5.0/web3d/');
+window.applet.setHTML5Codebase('GeoGebra/HTML5/5.0/web3d/');
 
 //applet.setHTML5Codebase("https://www.geogebra.org/apps/5.2.804.0/web3d");
 //window.onload = function() {applet.inject('ggbApplet');};
-applet.inject('applet_container', 'appletOnLoad');})();
+window.applet.inject('applet_container', 'appletOnLoad');
+});
 //applet.inject('ggbApplet')};
 //window.addEventListener("load", function() {applet.inject('applet_container','appletOnLoad');});
 
