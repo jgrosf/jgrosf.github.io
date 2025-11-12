@@ -27,7 +27,18 @@ window.addEventListener("load", async function() {
         document.getElementById('applet_container').textContent = "Error al cargar el applet.";
         return;
     }
+let tries = 0;
+    while (typeof window.GGBApplet === "undefined" && tries < 20) {
+        await new Promise(res => setTimeout(res, 250));
+        tries++;
+    }
+    if (typeof window.GGBApplet === "undefined") {
+        console.error("❌ GGBApplet no se ha cargado desde deployggb.js");
+        document.getElementById('applet_container').textContent = "Error: GeoGebra no disponible.";
+        return;
+    }
 
+    console.log("🧩 GGBApplet disponible, creando applet...");
 var parameters = {
 "id": "ggbApplet",
 "width":1440,
