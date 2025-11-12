@@ -7,58 +7,18 @@ function appletOnLoad(applet) {
 	inicializarListeners(); 
 }
 
-  	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
-	
-
 function inicializarListeners() {
 	if (!window.ggbApplet) {
     console.error("❌ ggbApplet no está disponible todavía");
     return;
     }
     console.log("✅ GeoGebra listo. Listeners activados.");  
-	//ggbApplet.registerObjectUpdateListener("x_{11}", "fuerzaActualizacionF1");
-	//ggbApplet.registerObjectUpdateListener("f_{1}", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
 }
 
-function actualizaAdvertencia() {
-    ggbApplet.unregisterObjectUpdateListener("actualizaAdvertencia");
-    var str = "";
-    var arrayAdvertencias = [];
-    var arrayAdvertenciasValidadas = [];
-    var longArray = 0;
-    var lAI = ggbApplet.getValue("leyendaAdvertenciaIntervalo");
-
-    if (lAI == 1) {
-        for (var k = 0; k <= 2; k++) {
-            arrayAdvertencias[k] = ggbApplet.getValue("leyendaAdvertenciaIntervaloF" + (k + 1));
-            if (arrayAdvertencias[k] == 1) {
-                longArray = arrayAdvertenciasValidadas.push(k + 1);
-            }
-        }
-
-        if (longArray != 0) {
-            for (k = 0; k <= (longArray - 1); k++) {
-                if (k == 0) {
-                    str += "f_{" + arrayAdvertenciasValidadas[k] + "}";
-                } else if (k == longArray - 1) {
-                    str += "\\; y \\;f_{" + arrayAdvertenciasValidadas[k] + "}";
-                } else {
-                    str = str + "\\;,f_{" + arrayAdvertenciasValidadas[k] + "}";
-                }
-            }
-        } else {
-            str = "";
-        }
-    } else {
-        str = "";
-    }
-    ggbApplet.setTextValue("textoF", str);
-    ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
-}
 
 function fuerzaActualizacionF1() {
     //alert("EUREKA GLOBAL F1");
@@ -393,6 +353,8 @@ function fuerzaActualizacionF1() {
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
 }
+
+  	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
 
 function fuerzaActualizacionF2() {
     //alert("EUREKA GLOBAL F2");
@@ -1050,4 +1012,40 @@ function fuerzaActualizacionF3() {
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
+}
+
+function actualizaAdvertencia() {
+    ggbApplet.unregisterObjectUpdateListener("actualizaAdvertencia");
+    var str = "";
+    var arrayAdvertencias = [];
+    var arrayAdvertenciasValidadas = [];
+    var longArray = 0;
+    var lAI = ggbApplet.getValue("leyendaAdvertenciaIntervalo");
+
+    if (lAI == 1) {
+        for (var k = 0; k <= 2; k++) {
+            arrayAdvertencias[k] = ggbApplet.getValue("leyendaAdvertenciaIntervaloF" + (k + 1));
+            if (arrayAdvertencias[k] == 1) {
+                longArray = arrayAdvertenciasValidadas.push(k + 1);
+            }
+        }
+
+        if (longArray != 0) {
+            for (k = 0; k <= (longArray - 1); k++) {
+                if (k == 0) {
+                    str += "f_{" + arrayAdvertenciasValidadas[k] + "}";
+                } else if (k == longArray - 1) {
+                    str += "\\; y \\;f_{" + arrayAdvertenciasValidadas[k] + "}";
+                } else {
+                    str = str + "\\;,f_{" + arrayAdvertenciasValidadas[k] + "}";
+                }
+            }
+        } else {
+            str = "";
+        }
+    } else {
+        str = "";
+    }
+    ggbApplet.setTextValue("textoF", str);
+    ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
 }
