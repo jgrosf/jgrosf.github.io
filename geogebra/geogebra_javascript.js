@@ -23,6 +23,11 @@ function inicializarListeners() {
 function fuerzaActualizacionF1() {
     //alert("EUREKA GLOBAL F1");
 	console.log("🔄 actualizacion1 ha cambiado:", ggbApplet.getValue("actualizacion1"));
+	    var span = document.getElementById("valor_actualizacion1");
+    if (span) {
+        span.textContent = valor;
+    }
+	
 	ggbApplet.unregisterObjectUpdateListener("x_{11}");
     ggbApplet.unregisterObjectUpdateListener("f_{1}");
     ggbApplet.unregisterObjectUpdateListener("actualizacion1");
