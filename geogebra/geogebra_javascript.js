@@ -685,6 +685,8 @@ function fuerzaActualizacionF2() {
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
 }
 
+  	window.fuerzaActualizacionF2 = fuerzaActualizacionF2;
+
 function fuerzaActualizacionF3() {
     //alert("EUREKA GLOBAL F3");
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
@@ -1014,6 +1016,8 @@ function fuerzaActualizacionF3() {
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
 }
 
+  	window.fuerzaActualizacionF3 = fuerzaActualizacionF3;
+    
 function actualizaAdvertencia() {
     ggbApplet.unregisterObjectUpdateListener("actualizaAdvertencia");
     var str = "";
@@ -1049,3 +1053,4 @@ function actualizaAdvertencia() {
     ggbApplet.setTextValue("textoF", str);
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
 }
+window.actualizaAdvertencia = actualizaAdvertencia;   
