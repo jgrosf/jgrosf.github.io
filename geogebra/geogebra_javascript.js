@@ -7,11 +7,6 @@ function appletOnLoad(ggbApi) {
 	window.ggbApplet=ggbApi;
 	inicializarListeners(); 
 }*/
-window.appletOnLoad=function(ggbApi){
-	console.log("🚀 appletOnLoad() llamada");
-	window.ggbApplet=ggbApi;
-	inicializarListeners(); 
-}
 
 function inicializarListeners() {
 	
