@@ -3,13 +3,8 @@ console.log("📦 geogebra-javascript.js cargado correctamente");
 
 function appletOnLoad(ggbApplet) {
 	console.log("🚀 appletOnLoad() llamada");
-	 esperarAppletYActivar();
+	inicializarListeners(ggbApplet); 
 }
-// Fallback: si GeoGebra nunca llama a ggbOnInit, lo hacemos nosotros
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("🕓 DOM listo, esperando ggbApplet...");
-    inicializarListeners(ggbApplet);
-});	
 
   	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
 	
