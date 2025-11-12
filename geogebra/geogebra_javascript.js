@@ -1,8 +1,13 @@
 
 console.log("📦 geogebra-javascript.js cargado correctamente");
 
-
+/*
 function appletOnLoad(ggbApi) {
+	console.log("🚀 appletOnLoad() llamada");
+	window.ggbApplet=ggbApi;
+	inicializarListeners(); 
+}*/
+window.appletOnLoad=function(ggbApi){
 	console.log("🚀 appletOnLoad() llamada");
 	window.ggbApplet=ggbApi;
 	inicializarListeners(); 
