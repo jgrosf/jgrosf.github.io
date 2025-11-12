@@ -10,7 +10,7 @@ function appletOnLoad(applet) {
   	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
 	
 
-function inicializarListeners(ggbApplet) {
+function inicializarListeners() {
 	if (!window.ggbApplet) {
     console.error("❌ ggbApplet no está disponible todavía");
     return;
