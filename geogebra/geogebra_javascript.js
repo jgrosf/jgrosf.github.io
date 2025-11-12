@@ -8,28 +8,10 @@ function appletOnLoad(ggbApplet) {
 // Fallback: si GeoGebra nunca llama a ggbOnInit, lo hacemos nosotros
 document.addEventListener("DOMContentLoaded", () => {
     console.log("🕓 DOM listo, esperando ggbApplet...");
-    esperarAppletYActivar();
+    inicializarListeners(ggbApplet);
 });	
 
   	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
-	
-function esperarAppletYActivar() {
-    let intentos = 0;
-    const maxIntentos = 50; // ~10 segundos
-
-    const intervalo = setInterval(() => {
-        intentos++;
-        //const ggbApplet = window.ggbApplet;
-
-        if (ggbApplet && typeof ggbApplet.registerAddListener === "function") {
-            clearInterval(intervalo);
-            inicializarListeners(ggbApplet);
-        } else if (intentos > maxIntentos) {
-            clearInterval(intervalo);
-            console.error("❌ No se detectó ggbApplet tras varios intentos");
-        }
-    }, 200);
-}
 	
 
 function inicializarListeners(ggbApplet) {
