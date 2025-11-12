@@ -1,19 +1,19 @@
 
 console.log("📦 geogebra-javascript.js cargado correctamente");
 
-/*
-function appletOnLoad(applet) {
+
+function appletOnLoad(ggbApi) {
 	console.log("🚀 appletOnLoad() llamada");
-	window.ggbApplet=applet;
+	window.ggbApplet=ggbApi;
 	inicializarListeners(); 
-}*/
+}
 
 function inicializarListeners() {
-	/*
+	
 	if (!window.ggbApplet) {
     console.error("❌ ggbApplet no está disponible todavía");
     return;
-    }*/
+    }
 	//window.ggbApplet=ggbApi;
     console.log("✅ GeoGebra listo. Listeners activados.");  
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
