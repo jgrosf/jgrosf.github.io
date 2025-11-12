@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     esperarAppletYActivar();
 });	
 
+  	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
+	
 function esperarAppletYActivar() {
     let intentos = 0;
     const maxIntentos = 50; // ~10 segundos
@@ -32,9 +34,8 @@ function esperarAppletYActivar() {
 
 function inicializarListeners(ggbApplet) {
     console.log("✅ GeoGebra listo. Listeners activados.");  
-  	window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
-	ggbApplet.registerObjectUpdateListener("x_{11}", "fuerzaActualizacionF1");
-	ggbApplet.registerObjectUpdateListener("f_{1}", "fuerzaActualizacionF1");
+	//ggbApplet.registerObjectUpdateListener("x_{11}", "fuerzaActualizacionF1");
+	//ggbApplet.registerObjectUpdateListener("f_{1}", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
