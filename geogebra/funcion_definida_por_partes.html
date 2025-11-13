@@ -9,31 +9,9 @@
 </head>
 <body>
 
-<div id="applet_container"></div>
+
 
 <script>
-window.addEventListener("load", async function() {
-    const ggbFile = "funcion_definida_a_trozos_v66_2_web_basico.ggb";
-
-    try {
-        const r = await fetch(ggbFile);
-        if (!r.ok) throw new Error("No se pudo cargar el archivo GGB");
-        console.log("✅ Archivo .ggb accesible, status:", r.status);
-    } catch(e) {
-        console.error("❌ Error al cargar .ggb:", e);
-        document.getElementById('applet_container').textContent = "Error al cargar el applet.";
-        return;
-    }
-let tries = 0;
-    while (typeof window.GGBApplet === "undefined" && tries < 20) {
-        await new Promise(res => setTimeout(res, 250));
-        tries++;
-    }
-    if (typeof window.GGBApplet === "undefined") {
-        console.error("❌ GGBApplet no se ha cargado desde deployggb.js");
-        document.getElementById('applet_container').textContent = "Error: GeoGebra no disponible.";
-        return;
-    }
 
     console.log("🧩 GGBApplet disponible, creando applet...");
 var parameters = {
@@ -69,7 +47,9 @@ var parameters = {
 "buttonShadows":false,
 "language":"es-ES",
 "filename":"funcion_definida_a_trozos_v66_2_web_basico.ggb"
-"appletOnLoad": function appletOnLoad(ggbApi) {
+};
+
+parameters.appletOnLoad = function (ggbApi) {
 	console.log("🚀 appletOnLoad() llamada");
 	window.ggbApplet=ggbApi;
 	inicializarListeners(); 
@@ -77,12 +57,15 @@ var parameters = {
 };
 // is3D=is 3D applet using 3D view, AV=Algebra View, SV=Spreadsheet View, CV=CAS View, EV2=Graphics View 2, CP=Construction Protocol, PC=Probability Calculator DA=Data Analysis, FI=Function Inspector, macro=Macros
 var views = {'is3D': 1,'AV': 0,'SV': 0,'CV': 0,'EV2': 1,'CP': 0,'PC': 0,'DA': 0,'FI': 0,'macro': 0};
-var applet= new GGBApplet(parameters);
+var applet= new GGBApplet(parameters,true);
 applet.setHTML5Codebase("https://www.geogebra.org/apps/5.2.804.0/web3d");
-applet.inject(document.body);
+
+window.onload = function() {applet.inject('applet_container');}
+
 //window.addEventListener("load", function() {applet.inject('applet_container','appletOnLoad');});
 
 
 </script>
+<div id="applet_container"></div>
 </body>
 </html>
