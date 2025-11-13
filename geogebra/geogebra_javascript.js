@@ -33,8 +33,6 @@ function esperarAppletYActivar() {
 function inicializarListeners(ggbApplet) {
     console.log("✅ GeoGebra listo. Listeners activados.");  
 
-	ggbApplet.registerObjectUpdateListener("x_{11}", "fuerzaActualizacionF1");
-	ggbApplet.registerObjectUpdateListener("f_{1}", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
@@ -77,9 +75,11 @@ function actualizaAdvertencia() {
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
 }
 
+  	window.actualizaAdvertencia = actualizaAdvertencia;
+
 function fuerzaActualizacionF1() {
     //alert("EUREKA GLOBAL F1");
-	console.log("🔄 actualizacion1 ha cambiado:", ggbApplet.getValue("actualizacion1"));
+	console.log("🔄 actualizacion1 ha cambiado:");
     ggbApplet.unregisterObjectUpdateListener("actualizacion1");
     ggbApplet.unregisterObjectUpdateListener("actualizacion2");
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
@@ -411,6 +411,7 @@ function fuerzaActualizacionF1() {
 
 function fuerzaActualizacionF2() {
     //alert("EUREKA GLOBAL F2");
+	console.log("🔄 actualizacion2 ha cambiado:");
     ggbApplet.unregisterObjectUpdateListener("actualizacion2");
     ggbApplet.unregisterObjectUpdateListener("actualizacion1");
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
@@ -738,8 +739,11 @@ function fuerzaActualizacionF2() {
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
 }
 
+  	window.fuerzaActualizacionF2 = fuerzaActualizacionF2;
+
 function fuerzaActualizacionF3() {
     //alert("EUREKA GLOBAL F3");
+	console.log("🔄 actualizacion3 ha cambiado:");
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
     ggbApplet.unregisterObjectUpdateListener("actualizacion1");
     ggbApplet.unregisterObjectUpdateListener("actualizacion2");
@@ -1066,3 +1070,5 @@ function fuerzaActualizacionF3() {
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
 }
+  	
+	window.fuerzaActualizacionF3 = fuerzaActualizacionF3;
