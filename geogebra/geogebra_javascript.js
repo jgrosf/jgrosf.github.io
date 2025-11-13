@@ -1,36 +1,85 @@
 
 console.log("📦 geogebra-javascript.js cargado correctamente");
 
-/*
-function appletOnLoad(ggbApi) {
-	console.log("🚀 appletOnLoad() llamada");
-	window.ggbApplet=ggbApi;
-	inicializarListeners(); 
-}*/
+function ggbOnInit() {
+	console.log("🚀 ggbOnInit() llamada");
+	 esperarAppletYActivar();
+}
+// Fallback: si GeoGebra nunca llama a ggbOnInit, lo hacemos nosotros
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("🕓 DOM listo, esperando ggbApplet...");
+    esperarAppletYActivar();
+});	
 
-function inicializarListeners() {
+function esperarAppletYActivar() {
+    let intentos = 0;
+    const maxIntentos = 50; // ~10 segundos
+
+    const intervalo = setInterval(() => {
+        intentos++;
+        const ggbApplet = window.ggbApplet;
+
+        if (ggbApplet && typeof ggbApplet.registerAddListener === "function") {
+            clearInterval(intervalo);
+            inicializarListeners(ggbApplet);
+        } else if (intentos > maxIntentos) {
+            clearInterval(intervalo);
+            console.error("❌ No se detectó ggbApplet tras varios intentos");
+        }
+    }, 200);
+}
 	
-	if (!window.ggbApplet) {
-    console.error("❌ ggbApplet no está disponible todavía");
-    return;
-    }
-	//window.ggbApplet=ggbApi;
+
+function inicializarListeners(ggbApplet) {
     console.log("✅ GeoGebra listo. Listeners activados.");  
+
+	ggbApplet.registerObjectUpdateListener("x_{11}", "fuerzaActualizacionF1");
+	ggbApplet.registerObjectUpdateListener("f_{1}", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
 }
 
+function actualizaAdvertencia() {
+    ggbApplet.unregisterObjectUpdateListener("actualizaAdvertencia");
+    var str = "";
+    var arrayAdvertencias = [];
+    var arrayAdvertenciasValidadas = [];
+    var longArray = 0;
+    var lAI = ggbApplet.getValue("leyendaAdvertenciaIntervalo");
+
+    if (lAI == 1) {
+        for (var k = 0; k <= 2; k++) {
+            arrayAdvertencias[k] = ggbApplet.getValue("leyendaAdvertenciaIntervaloF" + (k + 1));
+            if (arrayAdvertencias[k] == 1) {
+                longArray = arrayAdvertenciasValidadas.push(k + 1);
+            }
+        }
+
+        if (longArray != 0) {
+            for (k = 0; k <= (longArray - 1); k++) {
+                if (k == 0) {
+                    str += "f_{" + arrayAdvertenciasValidadas[k] + "}";
+                } else if (k == longArray - 1) {
+                    str += "\\; y \\;f_{" + arrayAdvertenciasValidadas[k] + "}";
+                } else {
+                    str = str + "\\;,f_{" + arrayAdvertenciasValidadas[k] + "}";
+                }
+            }
+        } else {
+            str = "";
+        }
+    } else {
+        str = "";
+    }
+    ggbApplet.setTextValue("textoF", str);
+    ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
+}
 
 function fuerzaActualizacionF1() {
     //alert("EUREKA GLOBAL F1");
 	console.log("🔄 actualizacion1 ha cambiado:", ggbApplet.getValue("actualizacion1"));
-	    var span = document.getElementById("valor_actualizacion1");
-    if (span) {
-        span.textContent = valor;
-    }
-	
     ggbApplet.unregisterObjectUpdateListener("actualizacion1");
     ggbApplet.unregisterObjectUpdateListener("actualizacion2");
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
@@ -353,7 +402,6 @@ function fuerzaActualizacionF1() {
     ggbApplet.setValue("actualizacionDominioF1", 0);
     ggbApplet.setValue("actualizacionFuncion1", 0);
     ggbApplet.evalCommand("limites=true");
-
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
@@ -690,8 +738,6 @@ function fuerzaActualizacionF2() {
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
 }
 
-  	window.fuerzaActualizacionF2 = fuerzaActualizacionF2;
-
 function fuerzaActualizacionF3() {
     //alert("EUREKA GLOBAL F3");
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
@@ -1020,42 +1066,3 @@ function fuerzaActualizacionF3() {
     ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
 }
-
-  	window.fuerzaActualizacionF3 = fuerzaActualizacionF3;
-    
-function actualizaAdvertencia() {
-    ggbApplet.unregisterObjectUpdateListener("actualizaAdvertencia");
-    var str = "";
-    var arrayAdvertencias = [];
-    var arrayAdvertenciasValidadas = [];
-    var longArray = 0;
-    var lAI = ggbApplet.getValue("leyendaAdvertenciaIntervalo");
-
-    if (lAI == 1) {
-        for (var k = 0; k <= 2; k++) {
-            arrayAdvertencias[k] = ggbApplet.getValue("leyendaAdvertenciaIntervaloF" + (k + 1));
-            if (arrayAdvertencias[k] == 1) {
-                longArray = arrayAdvertenciasValidadas.push(k + 1);
-            }
-        }
-
-        if (longArray != 0) {
-            for (k = 0; k <= (longArray - 1); k++) {
-                if (k == 0) {
-                    str += "f_{" + arrayAdvertenciasValidadas[k] + "}";
-                } else if (k == longArray - 1) {
-                    str += "\\; y \\;f_{" + arrayAdvertenciasValidadas[k] + "}";
-                } else {
-                    str = str + "\\;,f_{" + arrayAdvertenciasValidadas[k] + "}";
-                }
-            }
-        } else {
-            str = "";
-        }
-    } else {
-        str = "";
-    }
-    ggbApplet.setTextValue("textoF", str);
-    ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
-}
-window.actualizaAdvertencia = actualizaAdvertencia;   
