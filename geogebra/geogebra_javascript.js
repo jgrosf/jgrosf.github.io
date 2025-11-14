@@ -35,10 +35,10 @@ function inicializarListeners(ggbApplet) {
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
-    ggbAplet.evalCommand("SetActiveView(2)");
-	ggbAplet.evalCommand("UpdateConstruction()");
-	ggbAplet.evalCommand("SetActiveView(1)");
-	ggbAplet.evalCommand("UpdateConstruction()");
+    //ggbAplet.evalCommand("SetActiveView(2)");
+	//ggbAplet.evalCommand("UpdateConstruction()");
+	//ggbAplet.evalCommand("SetActiveView(1)");
+	//ggbAplet.evalCommand("UpdateConstruction()");
 }
 
 function fuerzaActualizacionF1() {
@@ -64,7 +64,7 @@ window.fuerzaActualizacionF3 = fuerzaActualizacionF3;
 
 function fuerzaActualizacionFN(n) {
     //version basica, sin calculo de limites, derivadas o discontinuidades de salto finito
-    alert("EUREKA GLOBAL F" + n);
+    //alert("EUREKA GLOBAL F" + n);
     ggbApplet.unregisterObjectUpdateListener("actualizacion3");
     ggbApplet.unregisterObjectUpdateListener("actualizacion1");
     ggbApplet.unregisterObjectUpdateListener("actualizacion2");
@@ -156,7 +156,7 @@ function arrayJS2listGGB(array, list) {
 
 function listGGB2arrayJS(list, array) {
     var num = 0;
-    //var arrayAux = [];
+
     ggbApplet.evalCommand("LongListAux=Length(" + list + ")");
     num = ggbApplet.getValue("LongListAux");
     for (var k = 1; k <= num; k++) {
@@ -847,7 +847,7 @@ function computoDominioDefinicion(n) {
     var cSd = ggbApplet.getValue("codigoSimbolo" + (2 * n));
     var Xi = ggbApplet.getValue("x_{" + n + "" + (n - 1) + "}");
     var Xd = ggbApplet.getValue("x_{" + n + "" + n + "}");
-    alert("cS" + (2 * n - 1) + "=" + cSi + "\n cS" + (2 * n) + "=" + cSd + "\n x_{" + n + "" + (n - 1) + "}=" + Xi + "\n x_{" + n + "" + n + "}=" + Xd);
+    //alert("cS" + (2 * n - 1) + "=" + cSi + "\n cS" + (2 * n) + "=" + cSd + "\n x_{" + n + "" + (n - 1) + "}=" + Xi + "\n x_{" + n + "" + n + "}=" + Xd);
     if ((cSd == 2) && (ggbApplet.isDefined("x_{" + n + "" + n + "}") == true)) {
         str1 = Xd + ">=x>=" + Xd;
         ggbApplet.setValue("muestraF" + n + "entera", 0);
@@ -938,7 +938,7 @@ function computoDominioDefinicion(n) {
     ggbApplet.evalCommand("dExtF" + n + ":=" + str3);
     str1 = ggbApplet.evalCommandCAS("dominioF:=dominioDefinicionF1(x) ∨ dominioDefinicionF2(x) ∨ dominioDefinicionF3(x)", "");
     ggbApplet.evalCommand("dominioDefinicionF:=" + str1);
-    alert("str1--" + str1 + "  str2--" + str2 + "  str3--" + str3);
+    //alert("str1--" + str1 + "  str2--" + str2 + "  str3--" + str3);
     return;
 }
 
