@@ -35,7 +35,10 @@ function inicializarListeners(ggbApplet) {
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
-	ggbAplet.refreshViews();
+    ggbAplet.evalCommand("SetActiveView(2)");
+	ggbAplet.evalCommand("UpdateConstruction()");
+	ggbAplet.evalCommand("SetActiveView(1)");
+	ggbAplet.evalCommand("UpdateConstruction()");
 }
 
 function fuerzaActualizacionF1() {
