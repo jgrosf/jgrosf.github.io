@@ -35,11 +35,8 @@ function inicializarListeners(ggbApplet) {
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
-    //ggbAplet.evalCommand("SetActiveView(2)");
-	//ggbAplet.evalCommand("UpdateConstruction()");
-	//ggbAplet.evalCommand("SetActiveView(1)");
-	//ggbAplet.evalCommand("UpdateConstruction()");
 }
+
 
 function fuerzaActualizacionF1() {
     fuerzaActualizacionFN(1);
@@ -65,40 +62,44 @@ window.fuerzaActualizacionF3 = fuerzaActualizacionF3;
 function fuerzaActualizacionFN(n) {
     //version basica, sin calculo de limites, derivadas o discontinuidades de salto finito
     //alert("EUREKA GLOBAL F" + n);
-    ggbApplet.unregisterObjectUpdateListener("actualizacion3");
-    ggbApplet.unregisterObjectUpdateListener("actualizacion1");
-    ggbApplet.unregisterObjectUpdateListener("actualizacion2");
-    ggbApplet.unregisterObjectUpdateListener("leyendaAdvertenciaIntervalo");
+    ggbApplet.unregisterObjectUpdateListener("actualizacion" + n);
+    //ggbApplet.unregisterObjectUpdateListener("actualizacion1");
+    //ggbApplet.unregisterObjectUpdateListener("actualizacion2");
+    //ggbApplet.unregisterObjectUpdateListener("leyendaAdvertenciaIntervalo");
     var statusN = 0;
     var error = 0;
     statusN = ggbApplet.getValue("actualizacion" + n);
     //error = ggbApplet.getValue("error");
     if (statusN == 1) {
-    computoDominioDefinicion(n);
-    generaCodigosAbscisasValidadas(n);
-    discriminaErroresDominio();
-    /*codigo de cómputo e impresion del dominio*/
-    computoImpresionDominio(n);
-} else {
-    alert("Función no modificada");
-}
+        computoDominioDefinicion(n);
+        generaCodigosAbscisasValidadas(n);
+        discriminaErroresDominio();
+        /*codigo de cómputo e impresion del dominio*/
+        computoImpresionDominio(n);
+        //alert("Función f_{" + n + "} modificada");
+    } else {
+        //alert("Función f_{" + n + "} no modificada.\nstatusN= " + statusN + "");
+    }
 
-ggbApplet.setValue("actualizacionDominioF" + n, 0);
-ggbApplet.setValue("actualizacionFuncion" + n, 0);
-ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
-ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
-ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
-ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
-return;
+    ggbApplet.setValue("actualizacionDominioF" + n, 0);
+    ggbApplet.setValue("actualizacionFuncion" + n, 0);
+    //alert("actualizacionDominioF" + n + "=" + ggbApplet.getValue("actualizacionDominioF" + n));
+    //alert("actualizacionFuncion" + n + "=" + ggbApplet.getValue("actualizacionFuncion" + n));
+    //alert("actualizacion" + n + "=" + ggbApplet.getValue("actualizacion" + n));
+    ggbApplet.registerObjectUpdateListener("actualizacion" + n, "fuerzaActualizacionF" + n);
+    //ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
+    //ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
+    //ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
+    return;
 }
 
 window.fuerzaActualizacionFN = fuerzaActualizacionFN;
 
 function actualizaAdvertencia() {
     ggbApplet.unregisterObjectUpdateListener("leyendaAdvertenciaIntervalo");
-    ggbApplet.unregisterObjectUpdateListener("actualizacion3");
-    ggbApplet.unregisterObjectUpdateListener("actualizacion1");
-    ggbApplet.unregisterObjectUpdateListener("actualizacion2");
+    //ggbApplet.unregisterObjectUpdateListener("actualizacion3");
+    //ggbApplet.unregisterObjectUpdateListener("actualizacion1");
+    //ggbApplet.unregisterObjectUpdateListener("actualizacion2");
     var str = "";
     var arrayAdvertencias = [];
     var arrayAdvertenciasValidadas = [];
@@ -130,13 +131,13 @@ function actualizaAdvertencia() {
         str = "";
     }
     ggbApplet.setTextValue("textoF", str);
-    ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
-    ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
-    ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
+    //ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
+    //ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
+    //ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
 }
 
-  	window.actualizaAdvertencia = actualizaAdvertencia;
+window.actualizaAdvertencia = actualizaAdvertencia;
 
 function arrayJS2listGGB(array, list) {
     var n = array.length;
@@ -152,11 +153,11 @@ function arrayJS2listGGB(array, list) {
     ggbApplet.evalCommand("" + list + "=" + str);
 }
 
-  	window.arrayJS2listGGB = arrayJS2listGGB;
+window.arrayJS2listGGB = arrayJS2listGGB;
 
 function listGGB2arrayJS(list, array) {
     var num = 0;
-
+    //var arrayAux = [];
     ggbApplet.evalCommand("LongListAux=Length(" + list + ")");
     num = ggbApplet.getValue("LongListAux");
     for (var k = 1; k <= num; k++) {
@@ -164,14 +165,14 @@ function listGGB2arrayJS(list, array) {
     }
 }
 
-    window.listGGB2arrayJS = listGGB2arrayJS;
+window.listGGB2arrayJS = listGGB2arrayJS;
 
 function isInfinite(x) {
     var esInfinito = (!isFinite(x)) && (!isNaN(x))
     return esInfinito;
 }
 
-    window.isInfinite = isInfinite;
+window.isInfinite = isInfinite;
 
 function excepcionPtoAislado() {
     var cS = 0;
@@ -225,7 +226,7 @@ function excepcionPtoAislado() {
     }
 }
 
-   window.excepcionPtoAislado = excepcionPtoAislado;
+window.excepcionPtoAislado = excepcionPtoAislado;
 
 function discriminaErroresDominio() {
     var fti = 0;
@@ -581,7 +582,7 @@ function discriminaErroresDominio() {
     }
 }
 
-   window.discriminaErroresDominio = discriminaErroresDominio;
+window.discriminaErroresDominio = discriminaErroresDominio;
 
 function generaCodigosAbscisasValidadas(n) {
     //version basica, sin calculo de discontinuidades de salto finito
@@ -627,7 +628,7 @@ function generaCodigosAbscisasValidadas(n) {
         }
     }
     nASVF = ggbApplet.getValue("numeroASVF" + n);
-    alert("numDEV=" + numDEV + "   AbsValDE=" + str + "   nASVF=" + nASVF);
+    //alert("numDEV=" + numDEV + "   AbsValDE=" + str + "   nASVF=" + nASVF);
     for (var k = 1; k <= nASVF; k++) {
         elementoASVF = ggbApplet.getListValue("listaValidadaASF" + n, k);
         if (asintotas.includes(elementoASVF)) {
@@ -696,7 +697,7 @@ function generaCodigosAbscisasValidadas(n) {
     return;
 }
 
-   window.generaCodigosAbscisasValidadas = generaCodigosAbscisasValidadas;
+window.generaCodigosAbscisasValidadas = generaCodigosAbscisasValidadas;
 
 function computoImpresionDominio(n) {
     /*codigo de cómputo e impresion del dominio*/
@@ -834,7 +835,7 @@ function computoImpresionDominio(n) {
     return;
 }
 
-   window.computoImpresionDominio = computoImpresionDominio;
+window.computoImpresionDominio = computoImpresionDominio;
 
 function computoDominioDefinicion(n) {
     var str = ggbApplet.getValueString("cadenaFiltradaDesigualdades" + n, false) + "";
@@ -942,4 +943,4 @@ function computoDominioDefinicion(n) {
     return;
 }
 
-  window.computoDominioDefinicion = computoDominioDefinicion;
+window.computoDominioDefinicion = computoDominioDefinicion;
