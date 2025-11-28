@@ -1,6 +1,37 @@
+console.log("geogebra-javascript.js cargado correctamente");
+
 function ggbOnInit() {
+	console.log("ggbOnInit() llamada");
+	esperarAppletYActivar();
+}
+// si GeoGebra nunca llama a ggbOnInit, se fuerza
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM listo, esperando ggbApplet...");
+    esperarAppletYActivar();
+});	
+
+function esperarAppletYActivar() {
+    let intentos = 0;
+    const maxIntentos = 50; // ~10 segundos
+
+    const intervalo = setInterval(() => {
+        intentos++;
+        const ggbApplet = window.ggbApplet;
+
+        if (ggbApplet && typeof ggbApplet.registerAddListener === "function") {
+            clearInterval(intervalo);
+            inicializarListeners(ggbApplet);
+        } else if (intentos > maxIntentos) {
+            clearInterval(intervalo);
+            console.error("No se detectó ggbApplet tras varios intentos");
+        }
+    }, 200);
+}
+
+function inicializarListeners(ggbApplet) {
     //version con cálculo de límites y derivadas, sin cómputo de DSF y un único botón de recalcular
-    ggbApplet.registerObjectUpdateListener("actualizacion1", "fuerzaActualizacionF1");
+	console.log("GeoGebra listo. Listeners activados.");
+    ggbApplet.registerObjectClickListener("actualizacion1", "fuerzaActualizacionF1");
     ggbApplet.registerObjectUpdateListener("actualizacion2", "fuerzaActualizacionF2");
     ggbApplet.registerObjectUpdateListener("actualizacion3", "fuerzaActualizacionF3");
     ggbApplet.registerObjectUpdateListener("leyendaAdvertenciaIntervalo", "actualizaAdvertencia");
@@ -11,16 +42,19 @@ function fuerzaActualizacionF1() {
     fuerzaActualizacionFN(1);
     return;
 }
+window.fuerzaActualizacionF1 = fuerzaActualizacionF1;
 
 function fuerzaActualizacionF2() {
     fuerzaActualizacionFN(2);
     return;
 }
+window.fuerzaActualizacionF2 = fuerzaActualizacionF2;
 
 function fuerzaActualizacionF3() {
     fuerzaActualizacionFN(3);
     return;
 }
+window.fuerzaActualizacionF3 = fuerzaActualizacionF3;
 
 function fuerzaActualizacionLimites() {
     //version con cálculo de límites y derivadas, de DSF y un único botón de recalcular
@@ -61,6 +95,7 @@ function fuerzaActualizacionLimites() {
     ggbApplet.registerObjectUpdateListener("forzarRecalculo", "fuerzaActualizacionLimites");
     return;
 }
+window.fuerzaActualizacionLimites = fuerzaActualizacionLimites;
 
 function fuerzaActualizacionFN(n) {
     //version con cálculo de límites y derivadas, de DSF y un único botón de recalcular
@@ -87,6 +122,7 @@ function fuerzaActualizacionFN(n) {
     ggbApplet.registerObjectUpdateListener("actualizacion" + n, "fuerzaActualizacionF" + n);
     return;
 }
+window.fuerzaActualizacionFN = fuerzaActualizacionFN;
 
 function arrayJS2listGGB(array, list) {
     var n = array.length;
@@ -101,6 +137,7 @@ function arrayJS2listGGB(array, list) {
     //alert(str);
     ggbApplet.evalCommand("" + list + "=" + str);
 }
+window.arrayJS2listGGB = arrayJS2listGGB;
 
 function listGGB2arrayJS(list, array) {
     var num = 0;
@@ -111,6 +148,7 @@ function listGGB2arrayJS(list, array) {
         array[k - 1] = ggbApplet.getListValue("" + list + "", k);
     }
 }
+window.listGGB2arrayJS = listGGB2arrayJS;
 
 function impresionTablaDinamicaLatex() {
     //str="\begin{array}{||c|c||}\hline \hline \phantom{ggb rocks} & titulo \\ \hline a & b  \\ \hline c & d  \\ \hline e & f  \\ \hline g & h  \\ \hline i & j  \\ \hline \hline \end{array}"
@@ -153,6 +191,7 @@ function impresionTablaDinamicaLatex() {
     //alert(str);
     return str;
 }
+window.impresionTablaDinamicaLatex = impresionTablaDinamicaLatex;
 
 function limiteDerivadaLateralDerecha(x0) {
     var str = "";
@@ -163,6 +202,7 @@ function limiteDerivadaLateralDerecha(x0) {
     limDLDF = ggbApplet.getValue("derivadaLateralDerechaAux");
     return limDLDF;
 }
+window.limiteDerivadaLateralDerecha = limiteDerivadaLateralDerecha;
 
 function limiteDerivadaLateralIzquierda(x0) {
     var str = "";
@@ -173,6 +213,7 @@ function limiteDerivadaLateralIzquierda(x0) {
     limDLIF = ggbApplet.getValue("derivadaLateralIzquierdaAux");
     return limDLIF;
 }
+window.limiteDerivadaLateralIzquierda = limiteDerivadaLateralIzquierda;
 
 function limiteDerivada(x0) {
     var str = "";
@@ -183,11 +224,13 @@ function limiteDerivada(x0) {
     limDerF = ggbApplet.getValue("limiteDerivadaAux");
     return limDerF;
 }
+window.limiteDerivada = limiteDerivada;
 
 function isInfinite(x) {
     var esInfinito = (!isFinite(x)) && (!isNaN(x))
     return esInfinito;
 }
+window.isInfinite = isInfinite;
 
 function actualizacionLimites() {
     var abscisaSF = 0;
@@ -418,6 +461,7 @@ function actualizacionLimites() {
     //ggbApplet.setValue("computandoLimites", 0);
     return;
 }
+window.actualizacionLimites = actualizacionLimites;
 
 
 function actualizaAdvertencia() {
@@ -454,6 +498,7 @@ function actualizaAdvertencia() {
     ggbApplet.setTextValue("textoF", str);
     return;
 }
+window.actualizaAdvertencia = actualizaAdvertencia;
 
 function excepcionPtoAislado() {
     var cS = 0;
@@ -506,7 +551,7 @@ function excepcionPtoAislado() {
         }
     }
 }
-
+window.excepcionPtoAislado = excepcionPtoAislado;
 
 function discriminaErroresDominio() {
     var fti = 0;
@@ -861,6 +906,7 @@ function discriminaErroresDominio() {
         }
     }
 }
+window.discriminaErroresDominio = discriminaErroresDominio;
 
 function generaCodigosAbscisasValidadas(n) {
     var nASVF = 0;
@@ -959,7 +1005,7 @@ function generaCodigosAbscisasValidadas(n) {
     }
     return;
 }
-
+window.generaCodigosAbscisasValidadas = generaCodigosAbscisasValidadas;
 
 function computoImpresionDominio(n) {
     /*codigo de cómputo e impresion del dominio*/
@@ -1096,6 +1142,7 @@ function computoImpresionDominio(n) {
     ggbApplet.setTextValue("texto2F" + n, str1);
     return;
 }
+window.computoImpresionDominio = computoImpresionDominio;
 
 function computoDominioDefinicion(n) {
     var str = ggbApplet.getValueString("cadenaFiltradaDesigualdades" + n, false) + "";
@@ -1202,3 +1249,4 @@ function computoDominioDefinicion(n) {
     //alert("str1--" + str1 + "  str2--" + str2 + "  str3--" + str3);
     return;
 }
+window.computoDominioDefinicion = computoDominioDefinicion;
