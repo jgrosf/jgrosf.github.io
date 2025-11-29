@@ -3,8 +3,8 @@
 <head>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta charset="utf-8"/>
- <script src="js/geogebra_fpp1_javascript.js"></script>
- <script src="GeoGebra/deployggb.js"></script></head>
+ <script src="../js/geogebra_fpp1_javascript.js"></script>
+ <script src="../GeoGebra/deployggb.js"></script></head>
 <body>
 
 <div id="ggbApplet"></div>
@@ -43,7 +43,7 @@ var parameters = {
 "buttonRounding":0.7,
 "buttonShadows":false,
 "language":"es-ES",
-"filename":"ggb/funcion_definida_a_trozos_v75_web_basica.ggb"
+"filename":"../ggb/funcion_definida_a_trozos_v75_web_basica.ggb"
 
 };
 // is3D=is 3D applet using 3D view, AV=Algebra View, SV=Spreadsheet View, CV=CAS View, EV2=Graphics View 2, CP=Construction Protocol, PC=Probability Calculator DA=Data Analysis, FI=Function Inspector, macro=Macros
@@ -51,8 +51,8 @@ var views = {'is3D': 1,'AV': 0,'SV': 0,'CV': 0,'EV2': 1,'CP': 0,'PC': 0,'DA': 0,
 
 var applet = new GGBApplet(parameters,true);
 
-//applet.setHTML5Codebase('GeoGebra/HTML5/5.0/web3d/');
-applet.setHTML5Codebase("https://www.geogebra.org/apps/5.2.804.0/web3d");
+applet.setHTML5Codebase('../GeoGebra/HTML5/5.0/web3d/');
+//applet.setHTML5Codebase("https://www.geogebra.org/apps/5.2.804.0/web3d");
 
 window.addEventListener("load",function() { applet.inject('ggbApplet');});
 
